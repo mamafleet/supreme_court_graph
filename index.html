@@ -1,161 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>3D Supreme Court Case Similarity Graph</title>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-        background-color: #0b0b1f;
-        color: white;
-        font-family: sans-serif;
-      }
-      #topicFilter {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        z-index: 10;
-        background: rgba(0, 0, 0, 0.8);
-        padding: 10px;
-        border-radius: 8px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="topicFilter">
-      Filter by topic:
-      <select id="topicDropdown">
-        <option value="All">All</option>
-      </select>
-    </div>
-    <script type="module">
-      import * as THREE from 'https://unpkg.com/three@0.161.0/build/three.module.js';
-      import { OrbitControls } from 'https://unpkg.com/three@0.161.0/examples/jsm/controls/OrbitControls.js';
-      import { ConvexGeometry } from 'https://unpkg.com/three@0.161.0/examples/jsm/geometries/ConvexGeometry.js';
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supreme Court Case Graph</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0b0c10;
+      color: #ffffff;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+    #3d-graph {
+      width: 100vw;
+      height: 100vh;
+    }
+    .graph-tooltip {
+      position: absolute;
+      color: white;
+      padding: 2px 4px;
+      font-size: 12px;
+      background: rgba(0,0,0,0.5);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="3d-graph"></div>
 
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        75,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        1000
-      );
-      const renderer = new THREE.WebGLRenderer({ antialias: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
+  <script src="https://unpkg.com/3d-force-graph"></script>
+  <script>
+    const topicColors = {
+      "Constitutional Law": '#1f77b4',
+      "Consumer Finance / Contracts": '#ff7f0e',
+      "Criminal Law / Due Process": '#2ca02c',
+      "Copyright / Civil Liability": '#d62728',
+      "Employment & Commerce": '#9467bd',
+      "Digital Speech": '#8c564b',
+      "Environmental/Admin Law": '#17becf'
+    };
 
-      const controls = new OrbitControls(camera, renderer.domElement);
-      camera.position.set(0, 0, 200);
-      controls.update();
+    const Graph = ForceGraph3D()(document.getElementById('3d-graph'))
+      .jsonUrl('case_similarity_graph_grouped.json')
+      .nodeLabel('id')
+      .nodeAutoColorBy('topic')
+      .nodeThreeObject(node => {
+        const group = new THREE.Group();
 
-      // Load JSON
-      const response = await fetch('case_similarity_graph_grouped.json');
-      const graph = await response.json();
+        const geometry = new THREE.SphereGeometry(3);
+        const material = new THREE.MeshBasicMaterial({ color: topicColors[node.topic] || '#cccccc' });
+        const sphere = new THREE.Mesh(geometry, material);
+        group.add(sphere);
 
-      const nodeMap = new Map();
-      const topicMap = new Map();
+        const sprite = new SpriteText(node.id);
+        sprite.material.depthWrite = false;
+        sprite.color = 'white';
+        sprite.textHeight = 2;
+        sprite.position.set(6, 6, 0);
+        group.add(sprite);
 
-      const colors = {};
-      const colorPool = [
-        '#ff4c4c', '#4cff4c', '#4c4cff', '#ff4cff', '#ffff4c',
-        '#4cffff', '#ffaa4c', '#aa4cff', '#4caa4c', '#aa4caa'
-      ];
+        return group;
+      })
+      .linkWidth(link => link.value * 2)
+      .linkOpacity(0.25)
+      .backgroundColor('#0b0c10')
+      .showNavInfo(true);
+  </script>
 
-      const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-
-      let colorIndex = 0;
-      graph.nodes.forEach(node => {
-        const geometry = new THREE.SphereGeometry(1.5, 16, 16);
-        const sphere = new THREE.Mesh(
-          geometry,
-          new THREE.MeshBasicMaterial({
-            color: colors[node.topic] || (colors[node.topic] = colorPool[colorIndex++ % colorPool.length])
-          })
-        );
-
-        // Place randomly in space for now
-        sphere.position.set(
-          Math.random() * 100 - 50,
-          Math.random() * 100 - 50,
-          Math.random() * 100 - 50
-        );
-
-        scene.add(sphere);
-        nodeMap.set(node.id, sphere);
-
-        if (!topicMap.has(node.topic)) topicMap.set(node.topic, []);
-        topicMap.get(node.topic).push(sphere);
-      });
-
-      // Draw links
-      const lineMaterial = new THREE.LineBasicMaterial({ color: 0x888888 });
-      const linkGeometry = new THREE.BufferGeometry();
-      const positions = [];
-      graph.links.forEach(link => {
-        const source = nodeMap.get(link.source);
-        const target = nodeMap.get(link.target);
-        if (source && target) {
-          positions.push(...source.position.toArray());
-          positions.push(...target.position.toArray());
-        }
-      });
-      linkGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-      const lines = new THREE.LineSegments(linkGeometry, lineMaterial);
-      scene.add(lines);
-
-      // Draw convex hulls for each topic
-      topicMap.forEach((nodes, topic) => {
-        const points = nodes.map(n => n.position.clone());
-        if (points.length >= 4) {
-          const hull = new ConvexGeometry(points);
-          const hullMesh = new THREE.Mesh(
-            hull,
-            new THREE.MeshBasicMaterial({
-              color: colors[topic],
-              transparent: true,
-              opacity: 0.15,
-              side: THREE.DoubleSide,
-              depthWrite: false
-            })
-          );
-          hullMesh.name = `hull-${topic}`;
-          scene.add(hullMesh);
-        }
-      });
-
-      // Dropdown filter
-      const dropdown = document.getElementById('topicDropdown');
-      topicMap.forEach((_, topic) => {
-        const option = document.createElement('option');
-        option.value = topic;
-        option.textContent = topic;
-        dropdown.appendChild(option);
-      });
-
-      dropdown.addEventListener('change', () => {
-        const selected = dropdown.value;
-        topicMap.forEach((nodes, topic) => {
-          const visible = selected === 'All' || topic === selected;
-          nodes.forEach(n => (n.visible = visible));
-          const hull = scene.getObjectByName(`hull-${topic}`);
-          if (hull) hull.visible = visible;
-        });
-      });
-
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-
-      function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
-      }
-
-      animate();
-    </script>
-  </body>
+  <script src="https://unpkg.com/three" defer></script>
+  <script src="https://unpkg.com/three-spritetext" defer></script>
+</body>
 </html>
