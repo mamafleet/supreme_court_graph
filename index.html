@@ -29,7 +29,12 @@
 <body>
   <div id="3d-graph"></div>
 
+  <!-- Load libraries in correct order -->
+  <script src="https://unpkg.com/three"></script>
+  <script src="https://unpkg.com/three-spritetext"></script>
   <script src="https://unpkg.com/3d-force-graph"></script>
+
+  <!-- Main graph script -->
   <script>
     const topicColors = {
       "Constitutional Law": '#1f77b4',
@@ -67,8 +72,5 @@
       .backgroundColor('#0b0c10')
       .showNavInfo(true);
   </script>
-
-  <script src="https://unpkg.com/three" defer></script>
-  <script src="https://unpkg.com/three-spritetext" defer></script>
 </body>
 </html>
