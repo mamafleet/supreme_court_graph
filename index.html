@@ -1,124 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Supreme Court Case Graph</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supreme Court Case Similarity</title>
   <style>
-    body { margin: 0; background: #111; color: #fff; font-family: sans-serif; }
-    #3d-graph { width: 100vw; height: 100vh; display: block; }
-    #controls {
+    body { margin: 0; background: #0b0b18; color: white; font-family: Arial, sans-serif; }
+    #topic-filter {
       position: absolute;
       top: 10px;
       left: 10px;
-      background: rgba(0,0,0,0.8);
+      background: #000;
       padding: 10px;
-      border-radius: 8px;
-      z-index: 10;
+      border-radius: 5px;
+      z-index: 2;
     }
-    label, select {
-      color: white;
-      font-size: 14px;
-    }
+    canvas { display: block; }
   </style>
-
-  <!-- Scripts -->
-  <script src="https://unpkg.com/3d-force-graph"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/geometries/ConvexGeometry.min.js"></script>
 </head>
 <body>
 
-<div id="3d-graph"></div>
-<div id="controls">
-  <label for="topicFilter">Filter by topic:</label><br/>
-  <select id="topicFilter">
-    <option value="All">All</option>
-    <option value="Constitutional Law">Constitutional Law</option>
-    <option value="Digital Speech">Digital Speech</option>
-    <option value="Environmental/Admin Law">Environmental/Admin Law</option>
-    <option value="Criminal Law / Due Process">Criminal Law / Due Process</option>
-    <option value="Consumer Finance / Contracts">Consumer Finance / Contracts</option>
-    <option value="Copyright / Civil Liability">Copyright / Civil Liability</option>
-    <option value="Employment & Commerce">Employment & Commerce</option>
-  </select>
+<div id="topic-filter">
+  <label for="topic">Filter by topic:</label>
+  <select id="topic"></select>
 </div>
+<div id="3d-graph"></div>
+
+<script src="https://unpkg.com/3d-force-graph"></script>
+<script src="https://unpkg.com/three"></script>
+<script src="https://unpkg.com/convex-hull"></script>
 
 <script>
-  const topicColors = {
-    "Constitutional Law": "dodgerblue",
-    "Digital Speech": "skyblue",
-    "Environmental/Admin Law": "mediumseagreen",
-    "Criminal Law / Due Process": "goldenrod",
-    "Consumer Finance / Contracts": "salmon",
-    "Copyright / Civil Liability": "orchid",
-    "Employment & Commerce": "lightgray",
-    "Uncategorized": "white"
-  };
+const topicColors = {};
+const colorPalette = [
+  '#FF6B6B', '#4ECDC4', '#556270', '#C7F464', '#FFB400', '#C44D58', '#6C5B7B', '#2A363B', '#99B898', '#E84A5F'
+];
 
-  let Graph, originalData, currentHulls = [];
+fetch('case_similarity_graph_grouped.json')
+  .then(res => res.json())
+  .then(data => {
+    const Graph = ForceGraph3D()
+      (document.getElementById('3d-graph'))
+      .graphData(data)
+      .nodeLabel('id')
+      .nodeAutoColorBy('topic')
+      .linkOpacity(0.15)
+      .linkWidth(link => link.value * 4)
+      .onEngineTick(() => drawHulls(Graph.scene(), data));
 
-  const drawConvexHulls = () => {
-    // Remove existing hulls
-    currentHulls.forEach(h => Graph.scene().remove(h));
-    currentHulls = [];
+    setupDropdown(data.nodes);
 
-    const topicGroups = {};
-    originalData.nodes.forEach(n => {
-      const obj = Graph.getObject3D(n.id);
-      if (!obj || !obj.position) return;
-      if (!topicGroups[n.topic]) topicGroups[n.topic] = [];
-      topicGroups[n.topic].push(obj.position.clone());
-    });
-
-    for (const [topic, points] of Object.entries(topicGroups)) {
-      if (points.length < 3) continue;
-      const geometry = new THREE.ConvexGeometry(points);
-      const material = new THREE.MeshBasicMaterial({
-        color: topicColors[topic] || "white",
-        opacity: 0.1,
-        transparent: true,
-        depthWrite: false
+    function setupDropdown(nodes) {
+      const topicSelect = document.getElementById('topic');
+      const topics = ['All', ...new Set(nodes.map(n => n.topic))];
+      topics.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.innerText = t;
+        topicSelect.appendChild(opt);
       });
-      const mesh = new THREE.Mesh(geometry, material);
-      currentHulls.push(mesh);
-      Graph.scene().add(mesh);
+      topicSelect.addEventListener('change', e => {
+        const selected = e.target.value;
+        Graph.graphData({
+          nodes: selected === 'All' ? data.nodes : data.nodes.filter(n => n.topic === selected),
+          links: selected === 'All'
+            ? data.links
+            : data.links.filter(l => {
+                const nodeIds = new Set(data.nodes.filter(n => n.topic === selected).map(n => n.id));
+                return nodeIds.has(l.source) && nodeIds.has(l.target);
+              })
+        });
+      });
     }
-  };
 
-  const filterGraph = topic => {
-    if (!originalData) return;
-    if (topic === "All") {
-      Graph.graphData(originalData);
-    } else {
-      const nodes = originalData.nodes.filter(n => n.topic === topic);
-      const nodeIds = new Set(nodes.map(n => n.id));
-      const links = originalData.links.filter(l => nodeIds.has(l.source) && nodeIds.has(l.target));
-      Graph.graphData({ nodes, links });
+    // Draw shaded convex hulls around groups
+    function drawHulls(scene, graphData) {
+      if (!scene || !graphData) return;
+      const topicGroups = {};
+      graphData.nodes.forEach(node => {
+        const pos = Graph.getNodePosition(node.id);
+        if (!topicGroups[node.topic]) topicGroups[node.topic] = [];
+        topicGroups[node.topic].push([pos.x, pos.y, pos.z]);
+      });
+
+      // Remove old hulls
+      scene.children = scene.children.filter(obj => obj.userData.type !== 'hull');
+
+      Object.entries(topicGroups).forEach(([topic, points], i) => {
+        if (points.length < 3) return;
+        const hullPoints = convexHull(points);
+        const geometry = new THREE.BufferGeometry();
+        const vertices = [];
+
+        for (let tri of hullPoints) {
+          for (let idx of tri) {
+            vertices.push(...points[idx]);
+          }
+        }
+
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        geometry.computeVertexNormals();
+        const material = new THREE.MeshBasicMaterial({
+          color: new THREE.Color(colorPalette[i % colorPalette.length]),
+          opacity: 0.2,
+          transparent: true,
+          side: THREE.DoubleSide,
+          depthWrite: false
+        });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.userData.type = 'hull';
+        scene.add(mesh);
+      });
     }
-    setTimeout(drawConvexHulls, 1200);
-  };
-
-  fetch("case_similarity_graph_grouped.json")
-    .then(res => res.json())
-    .then(data => {
-      originalData = data;
-
-      Graph = ForceGraph3D()
-        (document.getElementById("3d-graph"))
-        .graphData(data)
-        .nodeLabel(n => `${n.id} [${n.topic}]`)
-        .nodeColor(n => topicColors[n.topic] || "white")
-        .linkOpacity(0.25)
-        .linkWidth(l => l.value * 5)
-        .linkColor(() => "#888");
-
-      // Initial hull draw
-      setTimeout(drawConvexHulls, 2000);
-    });
-
-  document.getElementById("topicFilter").addEventListener("change", e => {
-    filterGraph(e.target.value);
   });
 </script>
 </body>
