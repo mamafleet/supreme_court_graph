@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Supreme Court Case Similarity Graph</title>
+<style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #eee;
+      font-family: sans-serif;
+    }
+    #3d-graph {
+      width: 100vw;
+      height: 100vh;
+    }
+    #controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.7);
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    select, label {
+      margin-top: 5px;
+    }
+  </style>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script></head>
+<body>
+<div id="3d-graph"></div>
+<div id="controls">
+<label for="topicFilter">Filter by topic:</label><br/>
+<select id="topicFilter">
+<option value="All">All</option>
+<option value="Constitutional Law">Constitutional Law</option>
+<option value="Digital Speech">Digital Speech</option>
+<option value="Environmental/Admin Law">Environmental/Admin Law</option>
+<option value="Criminal Law / Due Process">Criminal Law / Due Process</option>
+<option value="Consumer Finance / Contracts">Consumer Finance / Contracts</option>
+<option value="Copyright / Civil Liability">Copyright / Civil Liability</option>
+<option value="Employment &amp; Commerce">Employment &amp; Commerce</option>
+</select>
+</div>
+<script src="https://unpkg.com/3d-force-graph"></script>
+<script>
+    const colorByTopic = node => topicColor[node.topic] || 'white';
+    const topicColor = {
+      "Constitutional Law": "dodgerblue",
+      "Digital Speech": "skyblue",
+      "Environmental/Admin Law": "mediumseagreen",
+      "Criminal Law / Due Process": "goldenrod",
+      "Consumer Finance / Contracts": "salmon",
+      "Copyright / Civil Liability": "orchid",
+      "Employment & Commerce": "lightgray",
+      "Uncategorized": "white"
+    };
+
+    let originalData = null;
+    const filterGraph = (topic) => {
+      if (!originalData) return;
+      if (topic === "All") {
+        Graph.graphData(originalData);
+      } else {
+        const nodes = originalData.nodes.filter(n => n.topic === topic);
+        const nodeIds = new Set(nodes.map(n => n.id));
+        const links = originalData.links.filter(l => nodeIds.has(l.source) && nodeIds.has(l.target));
+        Graph.graphData({ nodes, links });
+      }
+    };
+
+    let Graph = null;
+
+    fetch("case_similarity_graph_grouped.json")
+      .then(res => res.json())
+      .then(data => {
+        originalData = data;
+        Graph = ForceGraph3D()(document.getElementById('3d-graph'))
+          .graphData(data)
+          .nodeAutoColorBy('topic')
+          .nodeLabel(node => `${node.id} [${node.topic}]`)
+          .nodeColor(colorByTopic)
+          .linkOpacity(0.3)
+          .linkWidth(link => link.value * 5)
+          .linkColor(() => "#888");
+
+        // Convex Hull Overlay
+        const drawHulls = () => {
+          const groupMap = {};
+          originalData.nodes.forEach(n => {
+            if (!groupMap[n.topic]) groupMap[n.topic] = [];
+            groupMap[n.topic].push(Graph.getObject3D(n.id).position);
+          });
+
+          Object.entries(groupMap).forEach(([topic, points]) => {
+            if (points.length < 3) return; // Need at least 3 points
+
+            const hullGeometry = new THREE.ConvexGeometry(points);
+            const hullMaterial = new THREE.MeshBasicMaterial({
+              color: topicColor[topic] || 'white',
+              opacity: 0.1,
+              transparent: true,
+              depthWrite: false
+            });
+
+            const hullMesh = new THREE.Mesh(hullGeometry, hullMaterial);
+            Graph.scene().add(hullMesh);
+          });
+        };
+
+        setTimeout(drawHulls, 2000); // Wait for layout to settle
+
+      });
+
+    document.getElementById("topicFilter").addEventListener("change", e => {
+      filterGraph(e.target.value);
+    });
+  </script>
+</body>
+</html>
