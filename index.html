@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Similarity Graph (3D)</title>
+  <style>
+    body { margin: 0; background: #111; color: #eee; font-family: sans-serif; }
+    #3d-graph { width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="3d-graph"></div>
+
+  <!-- Include 3D Force Graph library -->
+  <script src="https://unpkg.com/3d-force-graph"></script>
+
+  <script>
+    // Load your JSON data (with topic grouping)
+    const colorByTopic = node => topicColor[node.topic] || 'white';
+    const topicColor = {
+  "Constitutional Law": "dodgerblue",
+  "Digital Speech": "skyblue",
+  "Environmental/Admin Law": "mediumseagreen",
+  "Criminal Law / Due Process": "goldenrod",
+  "Consumer Finance / Contracts": "salmon",
+  "Copyright / Civil Liability": "orchid",
+  "Employment & Commerce": "lightgray",
+  "Uncategorized": "white"
+};
+
+    fetch("case_similarity_graph_grouped.json")
+      .then(res => res.json())
+      .then(data => {
+        const Graph = ForceGraph3D()
+          (document.getElementById('3d-graph'))
+          .graphData(data)
+          .nodeAutoColorBy('topic')
+          .nodeLabel(node => `${node.id} [${node.topic}]`)
+          .nodeColor(colorByTopic)
+          .linkOpacity(0.3)
+          .linkWidth(link => link.value * 5);
+      })
+      .then(data => {
+        const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
+          .graphData(data)
+          .nodeAutoColorBy("id")
+          .nodeLabel(node => node.id)
+          .linkOpacity(0.4)
+          .linkWidth(link => link.value * 5) // thicker = more similar
+          .linkColor(() => "#888")
+          .onNodeClick(node => {
+            alert(`Case: ${node.id}`);
+          });
+      })
+      .catch(err => console.error("Failed to load graph JSON:", err));
+  </script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+{
+  "nodes": [
+    {
+      "id": "United States v. Rahimi OA.pdf",
+      "topic": "Constitutional Law"
+    },
+    {
+      "id": "Coinbase v. Suski.pdf",
+      "topic": "Consumer Finance / Contracts"
+    },
+    {
+      "id": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "topic": "Criminal Law / Due Process"
+    },
+    {
+      "id": "Warner Chappell Music, Inc. v. Nealy.pdf",
+      "topic": "Copyright / Civil Liability"
+    },
+    {
+      "id": "Bissonnette v. LePage Bakeries Park St., LLC.pdf",
+      "topic": "Employment & Commerce"
+    },
+    {
+      "id": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "topic": "Employment & Commerce"
+    },
+    {
+      "id": "Garland v. Cargill OA.pdf",
+      "topic": "Constitutional Law"
+    },
+    {
+      "id": "Corner Post, Inc. v. Board of Governors.pdf",
+      "topic": "Criminal Law / Due Process"
+    },
+    {
+      "id": "Garland v. Cargill.pdf",
+      "topic": "Constitutional Law"
+    },
+    {
+      "id": "Cantero v. Bank of America, N. A..pdf",
+      "topic": "Consumer Finance / Contracts"
+    },
+    {
+      "id": "Moody v. NetChoice, LLC.pdf",
+      "topic": "Digital Speech"
+    },
+    {
+      "id": "Trump v. Anderson OA.pdf",
+      "topic": "Constitutional Law"
+    },
+    {
+      "id": "United States v. Rahimi.pdf",
+      "topic": "Constitutional Law"
+    },
+    {
+      "id": "Ohio v. EPA OA.pdf",
+      "topic": "Environmental/Admin Law"
+    },
+    {
+      "id": "McIntosh v. United States.pdf",
+      "topic": "Criminal Law / Due Process"
+    },
+    {
+      "id": "Trump v. Anderson.pdf",
+      "topic": "Constitutional Law"
+    },
+    {
+      "id": "McIntosh v. United States OA.pdf",
+      "topic": "Criminal Law / Due Process"
+    },
+    {
+      "id": "Ohio v. EPA.pdf",
+      "topic": "Environmental/Admin Law"
+    },
+    {
+      "id": "Moody v. NetChoice, LLC OA.pdf",
+      "topic": "Digital Speech"
+    },
+    {
+      "id": "Cantero v. Bank of America, N.A. OA.pdf",
+      "topic": "Consumer Finance / Contracts"
+    },
+    {
+      "id": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "topic": "Copyright / Civil Liability"
+    },
+    {
+      "id": "Coinbase, Inc. v. Suski OA.pdf",
+      "topic": "Consumer Finance / Contracts"
+    }
+  ],
+  "links": [
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "value": 0.497
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "value": 0.335
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "Garland v. Cargill OA.pdf",
+      "value": 0.364
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "Moody v. NetChoice, LLC.pdf",
+      "value": 0.159
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "Trump v. Anderson OA.pdf",
+      "value": 0.481
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "United States v. Rahimi.pdf",
+      "value": 0.401
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "Ohio v. EPA OA.pdf",
+      "value": 0.42
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "McIntosh v. United States OA.pdf",
+      "value": 0.373
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "Moody v. NetChoice, LLC OA.pdf",
+      "value": 0.543
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "Cantero v. Bank of America, N.A. OA.pdf",
+      "value": 0.453
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.376
+    },
+    {
+      "source": "United States v. Rahimi OA.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.344
+    },
+    {
+      "source": "Coinbase v. Suski.pdf",
+      "target": "Bissonnette v. LePage Bakeries Park St., LLC.pdf",
+      "value": 0.176
+    },
+    {
+      "source": "Coinbase v. Suski.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.636
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy.pdf",
+      "value": 0.152
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "value": 0.32
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "Garland v. Cargill OA.pdf",
+      "value": 0.4
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "Corner Post, Inc. v. Board of Governors.pdf",
+      "value": 0.415
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "Trump v. Anderson OA.pdf",
+      "value": 0.498
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "Ohio v. EPA OA.pdf",
+      "value": 0.436
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "McIntosh v. United States OA.pdf",
+      "value": 0.403
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "Moody v. NetChoice, LLC OA.pdf",
+      "value": 0.517
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "Cantero v. Bank of America, N.A. OA.pdf",
+      "value": 0.462
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.468
+    },
+    {
+      "source": "Corner Post, Inc. v. Bd. of Governors, FRS OA.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.339
+    },
+    {
+      "source": "Warner Chappell Music, Inc. v. Nealy.pdf",
+      "target": "Corner Post, Inc. v. Board of Governors.pdf",
+      "value": 0.252
+    },
+    {
+      "source": "Warner Chappell Music, Inc. v. Nealy.pdf",
+      "target": "McIntosh v. United States.pdf",
+      "value": 0.17
+    },
+    {
+      "source": "Warner Chappell Music, Inc. v. Nealy.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.513
+    },
+    {
+      "source": "Bissonnette v. LePage Bakeries Park St., LLC.pdf",
+      "target": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "value": 0.51
+    },
+    {
+      "source": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "target": "Garland v. Cargill OA.pdf",
+      "value": 0.218
+    },
+    {
+      "source": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "target": "Trump v. Anderson OA.pdf",
+      "value": 0.311
+    },
+    {
+      "source": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "target": "Ohio v. EPA OA.pdf",
+      "value": 0.369
+    },
+    {
+      "source": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "target": "McIntosh v. United States OA.pdf",
+      "value": 0.226
+    },
+    {
+      "source": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "target": "Moody v. NetChoice, LLC OA.pdf",
+      "value": 0.336
+    },
+    {
+      "source": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "target": "Cantero v. Bank of America, N.A. OA.pdf",
+      "value": 0.344
+    },
+    {
+      "source": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.281
+    },
+    {
+      "source": "Bissonnette v. LePage Bakeries Park St., LLC OA.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.337
+    },
+    {
+      "source": "Garland v. Cargill OA.pdf",
+      "target": "Garland v. Cargill.pdf",
+      "value": 0.58
+    },
+    {
+      "source": "Garland v. Cargill OA.pdf",
+      "target": "Trump v. Anderson OA.pdf",
+      "value": 0.48
+    },
+    {
+      "source": "Garland v. Cargill OA.pdf",
+      "target": "Ohio v. EPA OA.pdf",
+      "value": 0.316
+    },
+    {
+      "source": "Garland v. Cargill OA.pdf",
+      "target": "McIntosh v. United States OA.pdf",
+      "value": 0.259
+    },
+    {
+      "source": "Garland v. Cargill OA.pdf",
+      "target": "Moody v. NetChoice, LLC OA.pdf",
+      "value": 0.377
+    },
+    {
+      "source": "Garland v. Cargill OA.pdf",
+      "target": "Cantero v. Bank of America, N.A. OA.pdf",
+      "value": 0.343
+    },
+    {
+      "source": "Garland v. Cargill OA.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.291
+    },
+    {
+      "source": "Garland v. Cargill OA.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.242
+    },
+    {
+      "source": "Corner Post, Inc. v. Board of Governors.pdf",
+      "target": "Moody v. NetChoice, LLC.pdf",
+      "value": 0.21
+    },
+    {
+      "source": "Corner Post, Inc. v. Board of Governors.pdf",
+      "target": "United States v. Rahimi.pdf",
+      "value": 0.228
+    },
+    {
+      "source": "Corner Post, Inc. v. Board of Governors.pdf",
+      "target": "McIntosh v. United States.pdf",
+      "value": 0.203
+    },
+    {
+      "source": "Corner Post, Inc. v. Board of Governors.pdf",
+      "target": "Trump v. Anderson.pdf",
+      "value": 0.185
+    },
+    {
+      "source": "Corner Post, Inc. v. Board of Governors.pdf",
+      "target": "McIntosh v. United States OA.pdf",
+      "value": 0.159
+    },
+    {
+      "source": "Corner Post, Inc. v. Board of Governors.pdf",
+      "target": "Ohio v. EPA.pdf",
+      "value": 0.185
+    },
+    {
+      "source": "Corner Post, Inc. v. Board of Governors.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.205
+    },
+    {
+      "source": "Cantero v. Bank of America, N. A..pdf",
+      "target": "United States v. Rahimi.pdf",
+      "value": 0.155
+    },
+    {
+      "source": "Cantero v. Bank of America, N. A..pdf",
+      "target": "Trump v. Anderson.pdf",
+      "value": 0.168
+    },
+    {
+      "source": "Cantero v. Bank of America, N. A..pdf",
+      "target": "Cantero v. Bank of America, N.A. OA.pdf",
+      "value": 0.567
+    },
+    {
+      "source": "Moody v. NetChoice, LLC.pdf",
+      "target": "United States v. Rahimi.pdf",
+      "value": 0.303
+    },
+    {
+      "source": "Moody v. NetChoice, LLC.pdf",
+      "target": "Trump v. Anderson.pdf",
+      "value": 0.23
+    },
+    {
+      "source": "Moody v. NetChoice, LLC.pdf",
+      "target": "Moody v. NetChoice, LLC OA.pdf",
+      "value": 0.48
+    },
+    {
+      "source": "Trump v. Anderson OA.pdf",
+      "target": "United States v. Rahimi.pdf",
+      "value": 0.164
+    },
+    {
+      "source": "Trump v. Anderson OA.pdf",
+      "target": "Ohio v. EPA OA.pdf",
+      "value": 0.456
+    },
+    {
+      "source": "Trump v. Anderson OA.pdf",
+      "target": "Trump v. Anderson.pdf",
+      "value": 0.401
+    },
+    {
+      "source": "Trump v. Anderson OA.pdf",
+      "target": "McIntosh v. United States OA.pdf",
+      "value": 0.349
+    },
+    {
+      "source": "Trump v. Anderson OA.pdf",
+      "target": "Moody v. NetChoice, LLC OA.pdf",
+      "value": 0.486
+    },
+    {
+      "source": "Trump v. Anderson OA.pdf",
+      "target": "Cantero v. Bank of America, N.A. OA.pdf",
+      "value": 0.471
+    },
+    {
+      "source": "Trump v. Anderson OA.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.385
+    },
+    {
+      "source": "Trump v. Anderson OA.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.348
+    },
+    {
+      "source": "United States v. Rahimi.pdf",
+      "target": "McIntosh v. United States.pdf",
+      "value": 0.181
+    },
+    {
+      "source": "United States v. Rahimi.pdf",
+      "target": "Trump v. Anderson.pdf",
+      "value": 0.295
+    },
+    {
+      "source": "United States v. Rahimi.pdf",
+      "target": "Moody v. NetChoice, LLC OA.pdf",
+      "value": 0.154
+    },
+    {
+      "source": "Ohio v. EPA OA.pdf",
+      "target": "McIntosh v. United States OA.pdf",
+      "value": 0.319
+    },
+    {
+      "source": "Ohio v. EPA OA.pdf",
+      "target": "Ohio v. EPA.pdf",
+      "value": 0.522
+    },
+    {
+      "source": "Ohio v. EPA OA.pdf",
+      "target": "Moody v. NetChoice, LLC OA.pdf",
+      "value": 0.423
+    },
+    {
+      "source": "Ohio v. EPA OA.pdf",
+      "target": "Cantero v. Bank of America, N.A. OA.pdf",
+      "value": 0.462
+    },
+    {
+      "source": "Ohio v. EPA OA.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.365
+    },
+    {
+      "source": "Ohio v. EPA OA.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.364
+    },
+    {
+      "source": "McIntosh v. United States.pdf",
+      "target": "McIntosh v. United States OA.pdf",
+      "value": 0.611
+    },
+    {
+      "source": "McIntosh v. United States.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.179
+    },
+    {
+      "source": "Trump v. Anderson.pdf",
+      "target": "Cantero v. Bank of America, N.A. OA.pdf",
+      "value": 0.156
+    },
+    {
+      "source": "McIntosh v. United States OA.pdf",
+      "target": "Moody v. NetChoice, LLC OA.pdf",
+      "value": 0.344
+    },
+    {
+      "source": "McIntosh v. United States OA.pdf",
+      "target": "Cantero v. Bank of America, N.A. OA.pdf",
+      "value": 0.319
+    },
+    {
+      "source": "McIntosh v. United States OA.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.373
+    },
+    {
+      "source": "McIntosh v. United States OA.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.262
+    },
+    {
+      "source": "Moody v. NetChoice, LLC OA.pdf",
+      "target": "Cantero v. Bank of America, N.A. OA.pdf",
+      "value": 0.477
+    },
+    {
+      "source": "Moody v. NetChoice, LLC OA.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.378
+    },
+    {
+      "source": "Moody v. NetChoice, LLC OA.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.344
+    },
+    {
+      "source": "Cantero v. Bank of America, N.A. OA.pdf",
+      "target": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "value": 0.37
+    },
+    {
+      "source": "Cantero v. Bank of America, N.A. OA.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.346
+    },
+    {
+      "source": "Warner Chappell Music, Inc. v. Nealy OA.pdf",
+      "target": "Coinbase, Inc. v. Suski OA.pdf",
+      "value": 0.325
+    }
+  ]
+}
