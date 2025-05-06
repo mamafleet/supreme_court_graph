@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Legal Topic Similarity Graph</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: #1e1e1e; }
+    #filter { position: absolute; top: 10px; left: 10px; z-index: 10; background: white; padding: 10px; border-radius: 5px; }
+    label { display: block; margin-bottom: 5px; }
+  </style>
+</head>
+<body>
+  <div id="filter"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/3d-force-graph/1.70.4/3d-force-graph.min.js"></script>
+  <script>
+    const Graph = ForceGraph3D()
+      (document.body)
+      .backgroundColor('#1e1e1e')
+      .nodeLabel('label')
+      .nodeAutoColorBy('group')
+      .linkOpacity(0.3)
+      .linkDirectionalParticles(1)
+      .linkDirectionalParticleWidth(d => Math.max(d.value * 10, 0.5));
+
+    let rawData;
+    let currentCategory = null;
+
+    fetch('category_graph_multilinks.json')
+      .then(res => res.json())
+      .then(data => {
+        rawData = data;
+        const filterDiv = document.getElementById("filter");
+
+        data.categories.forEach(cat => {
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.id = cat;
+          checkbox.checked = true;
+
+          checkbox.addEventListener("change", () => {
+            updateGraph();
+          });
+
+          const label = document.createElement("label");
+          label.htmlFor = cat;
+          label.innerText = cat;
+
+          filterDiv.appendChild(checkbox);
+          filterDiv.appendChild(label);
+        });
+
+        updateGraph();
+      });
+
+    function updateGraph() {
+      const activeCategories = [];
+      rawData.categories.forEach(cat => {
+        const box = document.getElementById(cat);
+        if (box && box.checked) activeCategories.push(cat);
+      });
+
+      let links = [];
+      activeCategories.forEach(cat => {
+        links = links.concat(rawData.links_by_category[cat]);
+      });
+
+      Graph
+        .graphData({
+          nodes: rawData.nodes,
+          links: links
+        });
+    }
+  </script>
+</body>
+</html>
