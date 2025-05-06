@@ -29,12 +29,10 @@
 <body>
   <div id="3d-graph"></div>
 
-  <!-- Load libraries in correct order -->
+  <script src="https://unpkg.com/3d-force-graph"></script>
   <script src="https://unpkg.com/three"></script>
   <script src="https://unpkg.com/three-spritetext"></script>
-  <script src="https://unpkg.com/3d-force-graph"></script>
 
-  <!-- Main graph script -->
   <script>
     const topicColors = {
       "Constitutional Law": '#1f77b4',
@@ -58,12 +56,13 @@
         const sphere = new THREE.Mesh(geometry, material);
         group.add(sphere);
 
-        const sprite = new SpriteText(node.id);
-        sprite.material.depthWrite = false;
-        sprite.color = 'white';
-        sprite.textHeight = 2;
-        sprite.position.set(6, 6, 0);
-        group.add(sprite);
+        const SpriteText = window.SpriteText;
+        const label = new SpriteText(node.id);
+        label.color = 'white';
+        label.textHeight = 2;
+        label.material.depthWrite = false;
+        label.position.set(6, 6, 0);
+        group.add(label);
 
         return group;
       })
